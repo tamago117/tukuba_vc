@@ -10,7 +10,7 @@
     </node>
 
     <!--velodyne-->
-    <include file="$(find tvc_navigation)/launch/include/naviton/vlp16db_unity.launch"/>
+    <include file="$(find tvc_navigation)/launch/naviton/include/vlp16db_unity.launch"/>
 
     <!--rviz-->
     <include file="$(find tvc_navigation)/launch/naviton/include/model_show.launch" >
