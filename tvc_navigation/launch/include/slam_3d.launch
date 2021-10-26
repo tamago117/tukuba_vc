@@ -1,0 +1,37 @@
+<launch>
+    <arg name="map_pcd" default = "$(find tvc_navigation)/resources/pcd/vTsuku1.pcd"/>
+    <arg name="rate" value="0.1"/>
+    <arg name="mcl_3dl_config" default="$(find tvc_navigation)/config/mcl_3dl.yaml"/>
+
+    <!-- Robot description -->
+    <include file="$(find tvc_navigation)/launch/include/model_show.launch" >
+        <arg name="include" value="true"/>
+    </include>
+
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+
+    <!--velodyne-->
+    <include file="$(find tvc_navigation)/launch/include/vlp16db_unity.launch"/>
+
+    <!--odometry-->
+    <node name="odom_tf_broadcaster" pkg="tvc_navigation" type ="odom_tf_broadcaster"/>
+    <!--<node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+        <rosparam command="load" file="$(find tvc_navigation)/config/ekf_localization/model1.yaml" />
+        <remap from="odometry/filtered" to="fusion/odom" />
+    </node>-->
+
+    <group if="$(eval nav_mode == 'localization')">
+        <!-- amcl -->
+        <node pkg="pcl_ros" type="pcd_to_pointcloud" name="pcd_to_pointcloud"
+        args="$(arg map_pcd) $(arg rate)" >
+            <param name="frame_id" value="map" />
+            <remap from="cloud_pcd" to="mapcloud" />
+        </node>
+        <node pkg="mcl_3dl" type="mcl_3dl" name="mcl_3dl" output="screen" unless="$(arg generate_test_bag)" respawn="true">
+            <rosparam command="load" file="$(arg mcl_3dl_config)"/>
+            <param name="compatible" value="1" />
+            <remap from="cloud" to="velodyne_points" />
+        </node>
+    </group>
+
+</launch>

@@ -155,28 +155,33 @@ include_directories(
 #   ${catkin_LIBRARIES}
 # )
 
-add_executable(wp_record   src/wpRecord.cpp)
-target_link_libraries(wp_record
+add_executable(wpRecord   src/wpRecord.cpp)
+target_link_libraries(wpRecord
   ${catkin_LIBRARIES}
 )
 
-add_executable(csv_output   src/csv_out.cpp)
-target_link_libraries(csv_output
+add_executable(csvOutput   src/csv_out.cpp)
+target_link_libraries(csvOutput
   ${catkin_LIBRARIES}
 )
 
-add_executable(wp_load   src/wpLoad.cpp)
-target_link_libraries(wp_load
+add_executable(wpLoad   src/wpLoad.cpp)
+target_link_libraries(wpLoad
   ${catkin_LIBRARIES}
 )
 
-add_executable(wp_control   src/wpControl.cpp)
-target_link_libraries(wp_control
+add_executable(wpControl   src/wpControl.cpp)
+target_link_libraries(wpControl
   ${catkin_LIBRARIES}
 )
 
-add_executable(wp_visualizer   src/wpVisualizer.cpp)
-target_link_libraries(wp_visualizer
+add_executable(wpVisualizer   src/wpVisualizer.cpp)
+target_link_libraries(wpVisualizer
+  ${catkin_LIBRARIES}
+)
+
+add_executable(wpSelect   src/wpSelect.cpp)
+target_link_libraries(wpSelect
   ${catkin_LIBRARIES}
 )
 

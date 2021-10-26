@@ -1,0 +1,14 @@
+<launch>
+    <arg name="map_pcd" value="$(find tvc_navigation)/pcd/vTsuku1.pcd" />
+    <arg name="rate" value="0.1"/>
+
+    <node pkg="pcl_ros" type="pcd_to_pointcloud" name="pcd_to_pointcloud"
+      args="$(arg map_pcd) $(arg rate)" >
+        <param name="frame_id" value="map" />
+        <remap from="cloud_pcd" to="mapcloud" />
+    </node>
+
+    <arg name="rvizconfig" default="$(find tvc_navigation)/rviz/map_display.rviz" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+</launch>
