@@ -5,7 +5,7 @@
     <arg name="loop_rate" default="50"/>
     <arg name="fileName" default="way1"/>
 
-    <include file="$(find tvc_navigation)/launch/include/slam_2d.launch">
+    <include file="$(find tvc_navigation)/launch/include/slam_3d.launch">
         <arg name="map_pcd" value = "$(find tvc_navigation)/resources/pcd/vTsuku1.pcd"/>
         <arg name="mcl_3dl_config" value="$(find tvc_navigation)/config/mcl_3dl.yaml"/>
     </include>

@@ -29,7 +29,7 @@
     </node>
 
     <!--rviz-->
-    <arg name="rvizconfig" default="$(find tvc_navigation)/rviz/wpRecord.rviz" />
+    <arg name="rvizconfig" default="$(find tvc_navigation)/rviz/wpRecord_2d.rviz" />
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" respawn="true" />
     
 </launch>

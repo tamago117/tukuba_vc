@@ -2,6 +2,7 @@
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/Joy.h>
 
+double control_rate;
 geometry_msgs::Twist cmd_vel;
 void joy_callback(const sensor_msgs::Joy& joy_msg)
 {
@@ -17,7 +18,6 @@ int main(int argc, char** argv)
   ros::Publisher cmd_pub = nh.advertise<geometry_msgs::Twist>("cmd_vel", 1000);
   ros::Subscriber joy_sub = nh.subscribe("joy", 10, joy_callback);
 
-  double control_rate;
   pnh.param<double>("control_rate", control_rate, 1.0);
 
   ros::Rate loop_rate(10);

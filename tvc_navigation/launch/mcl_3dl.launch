@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="map_pcd" default = "$(find tvc_navigation)/resources/pcd/vTsuku1.pcd"/>
+    <arg name="generate_test_bag" default="false" />
+    <arg name="mcl_3dl_config" default="$(find tvc_navigation)/config/mcl_3dl.yaml"/>
+
+    <arg name="without_odom" default="false" />
+    <arg name="without_imu" default="false" />
+
+    <!--localization-->
+
+    <arg name="config_file" default="$(find tvc_navigation)/config/mcl/test_localization.yaml"
+      unless="$(eval arg('without_odom') or arg('without_imu'))" />
+    <arg name="config_file" default="$(find tvc_navigation)/config/mcl/test_localization_noodom.yaml"
+        if="$(arg without_odom)" />
+    <arg name="config_file" default="$(find tvc_navigation)/config/mcl/test_localization_noimu.yaml"
+        if="$(arg without_imu)" />
+    <rosparam command="load" file="$(arg config_file)"/>
+    <!--<rosparam command="load" file="$(arg mcl_3dl_config)"/>-->
+    <node pkg="mcl_3dl" type="mcl_3dl" name="mcl_3dl" output="screen" unless="$(arg generate_test_bag)" respawn="true">
+        <param name="compatible" value="1" />
+        <remap from="cloud" to="velodyne_points" />
+    </node>
+    <!--map generate-->
+    <!--<arg name="rate" value="5"/>-->
+    <node pkg="pcl_ros" type="pcd_to_pointcloud" name="pcd_to_pointcloud"
+    args="$(arg map_pcd)" >
+        <param name="frame_id" value="map" />
+        <param name="latch" value="true"/>
+        <remap from="cloud_pcd" to="mapcloud" />
+    </node>
+    
+
+</launch>
