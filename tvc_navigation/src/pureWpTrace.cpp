@@ -10,8 +10,8 @@
 #include <nav_msgs/Path.h>
 #include <geometry_msgs/Twist.h>
 #include <geometry_msgs/Pose.h>
-#include <rumba_autocar/PurePursuit.h>
-#include <rumba_autocar/tf_position.h>
+#include "tvc_navigation/PurePursuit.h"
+#include "tvc_navigation/tf_position.h"
 #include <vector>
 #include <string>
 #include <iostream>
