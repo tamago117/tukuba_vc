@@ -1,20 +1,35 @@
 <?xml version="1.0"?>
 <launch>
 
-    <include file="$(find tvc_navigation)/launch/include/slam_2d.launch">
+    <arg name="model" default="$(find tvc_navigation)/urdf/naviton_3d.urdf.xacro" />
+    <arg name="gmapping_config" default="$(find tvc_navigation)/config/gmapping.yaml" />
+
+    <!-- Robot description -->
+    <include file="$(find tvc_navigation)/launch/include/model_show.launch" >
+        <arg name="include" value="true"/>
+        <arg name="model" default="$(arg model)" />
+    </include>
+    <!--web socket-->
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+    <!--velodyne-->
+    <include file="$(find tvc_navigation)/launch/include/vlp16db_unity.launch"/>
+    <!--odometry-->
+    <node name="odom_tf_broadcaster" pkg="tvc_navigation" type ="odom_tf_broadcaster"/>
+    <!--slam packages-->
+    <include file="$(find eg_navigation)/launch/include/slam_2d.launch">
         <arg name="nav_mode" default="mapping"/>
-        <arg name="move_base" default="false"/>
+        <arg name="gmapping_config" default="$(arg gmapping_config)" />
     </include>
 
     <!--joystick-->
-    <node name="joystickPS4" pkg="tvc_navigation" type="joystickPS4">
+    <node name="joystickPS4" pkg="eg_mixed" type="joystickPS4">
         <remap from="cmd_vel" to="ps4/cmd_vel"/>
     </node>
     <node name="joy_node" pkg="joy" type="joy_node"/>
 
     <!--safety function-->
-    <node pkg="tvc_navigation" name="laser2pc" type="laser2pc"/>
-    <node pkg="tvc_navigation" name="safety_limit" type="safety_limit" output="screen">
+    <node pkg="eg_mixed" name="laser2pc" type="laser2pc"/>
+    <node pkg="eg_safety" name="safety_limit" type="safety_limit" output="screen">
         <param name="max_nn" value="100"/>
         <param name="robot_radius" value="0.6"/>
         <param name="x_max" value="3.0"/>
