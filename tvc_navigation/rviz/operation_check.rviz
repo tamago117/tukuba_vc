@@ -30,7 +30,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: PointCloud2
+    SyncSource: ""
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -111,7 +111,7 @@ Visualization Manager:
       Enabled: true
       History Length: 1
       Name: Imu
-      Topic: /imu
+      Topic: /imu/data
       Unreliable: false
       Value: true
     - Class: rviz/Image
@@ -141,9 +141,7 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 255
       Min Color: 0; 0; 0
-      Min Intensity: 18
       Name: PointCloud2
       Position Transformer: XYZ
       Queue Size: 10
@@ -163,47 +161,15 @@ Visualization Manager:
         All Enabled: false
         base_foot_point:
           Value: true
-        base_footprint:
-          Value: true
-        base_link:
-          Value: false
-        camera_link:
-          Value: true
-        front_lrf_link:
-          Value: false
-        left_wheel_link:
-          Value: false
         odom:
           Value: true
-        rear_lrf_link:
-          Value: false
-        right_wheel_link:
-          Value: false
-        velodyne:
-          Value: false
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        base_foot_point:
-          base_link:
-            camera_link:
-              {}
-            front_lrf_link:
-              {}
-            left_wheel_link:
-              {}
-            rear_lrf_link:
-              {}
-            right_wheel_link:
-              {}
-            velodyne:
-              {}
-        odom:
-          base_footprint:
-            {}
+        {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -273,4 +239,4 @@ Window Geometry:
     collapsed: false
   Width: 1299
   X: 67
-  Y: 27
+  Y: 1

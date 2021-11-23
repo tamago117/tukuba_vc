@@ -12,7 +12,8 @@
 #include <nav_msgs/Path.h>
 #include <iostream>
 #include <string>
-#include <tvc_wpTool/tf_position.h>
+#include "tvc_wpTool/tf_position.h"
+#include "tvc_wpTool/robot_status.h"
 
 //poseStamp間の距離
 double poseStampDistance(const geometry_msgs::PoseStamped& pose1, const geometry_msgs::PoseStamped& pose2)
@@ -80,8 +81,7 @@ int main(int argc, char** argv)
     std_msgs::Int32 nowWp;
 
     std_msgs::String mode;
-    const std::string angleAdjust = "adjust";
-    mode.data = angleAdjust;
+    mode.data = robot_status_str(robot_status::angleAdjust);
     bool isReach = false;
     while(ros::ok())
     {

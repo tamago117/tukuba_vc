@@ -2,9 +2,7 @@
 #include <std_msgs/String.h>
 #include <geometry_msgs/Twist.h>
 #include <string>
-
-const std::string recovery = "recovery";
-const std::string run = "run";
+#include "tvc_navigation/robot_status.h"
 
 std_msgs::String mode;
 void mode_callback(const std_msgs::String& mode_message)
@@ -25,8 +23,8 @@ int main(int argc, char** argv)
     pnh.param<double>("duration", duration, 0.5);
 
     ros::Subscriber mode_sub = nh.subscribe("safety_limit/mode", 10, mode_callback);
-    ros::Publisher cmd_pub = nh.advertise<geometry_msgs::Twist>("simple_recovery/cmd_vel", 10);
-    ros::Publisher mode_pub = nh.advertise<std_msgs::String>("simple_recovery/mode", 10);
+    ros::Publisher cmd_pub = nh.advertise<geometry_msgs::Twist>("recovery/cmd_vel", 10);
+    ros::Publisher mode_pub = nh.advertise<std_msgs::String>("recovery/mode", 10);
 
     ros::Rate loop_rate(10);
 
@@ -35,19 +33,16 @@ int main(int argc, char** argv)
     ros::Time preT = ros::Time::now();
     while(ros::ok())
     {
-        if(mode_out.data == recovery){
-            mode_out.data = recovery;
+        if(mode_out.data == robot_status_str(robot_status::recovery)){
             cmd_vel.linear.x = linear_vel;
             cmd_vel.angular.z = angular_vel;
 
             if((ros::Time::now() - preT) >= ros::Duration(duration)){
-                mode_out.data = run;
+                mode_out.data = robot_status_str(robot_status::run);
             }
 
         }else{
             mode_out = mode;
-            cmd_vel.linear.x = 0;
-            cmd_vel.angular.z = 0;
 
             preT = ros::Time::now();
         }
